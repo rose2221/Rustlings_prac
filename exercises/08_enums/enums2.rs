@@ -9,10 +9,10 @@ struct Point {
 #[derive(Debug)]
 enum Message {
     // TODO: Define the different variants used below.
-    Resize,
-    Move,
-    Echo,
-    ChangeColor,
+    Resize{width: i32, height: i32},
+    Move(Point),
+    Echo(String),
+    ChangeColor(i32, i32, i32),
     Quit
 }
 
@@ -31,7 +31,7 @@ fn main() {
         Message::Move(Point { x: 10, y: 15 }),
         Message::Echo(String::from("hello world")),
         Message::ChangeColor(200, 255, 255),
-        Message::Quit,
+        Message::Quit
     ];
 
     for message in &messages {

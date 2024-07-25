@@ -26,8 +26,31 @@ enum Command {
 mod my_module {
     use super::Command;
 
-    // TODO: Complete the function.
-    // pub fn transformer(input: ???) -> ??? { ??? }
+   pub fn transformer(vel: Vec<(String, Command)>) -> Vec<String> {
+        let mut v = Vec::new(); // Correctly initialize the vector
+        for (mut string, command) in vel { // Unpack tuple correctly and make `string` mutable
+            match command {
+                Command::Uppercase => {
+                    string = string.to_uppercase(); // to_uppercase returns a new String
+                    v.push(string);
+                }
+                Command::Trim => {
+                    string = string.trim_start_matches(' ').to_string(); // Use to_string to create a new String
+                    string = string.trim_end_matches(' ').to_string();
+                    v.push(string);
+                }
+                Command::Append(i) => {
+                    let b = String::from("bar");
+                    let mut r = string.clone();
+                    for _ in 0..i { // Correct range syntax
+                        r += &b;
+                    }
+                    v.push(r);
+                }
+            }
+        }
+        v
+    }
 }
 
 fn main() {
@@ -39,7 +62,7 @@ mod tests {
     // TODO: What do we need to import to have `transformer` in scope?
     // use ???;
     use super::Command;
-
+use super::my_module::transformer;
     #[test]
     fn it_works() {
         let input = vec![
