@@ -12,20 +12,36 @@
 // block to support alphabetical report cards in addition to numerical ones.
 
 // TODO: Adjust the struct as described above.
-struct ReportCard {
-    grade: f32,
+trait Grade: std::fmt::Display {}
+
+impl Grade for f32{}
+impl Grade for String{}
+struct ReportCard<T: Grade> {
+    grade: T,
+    // alpha: String;
     student_name: String,
     student_age: u8,
 }
 
+// trait printreportcard{
+//     fn print(&self) -> String
+// }
+
 // TODO: Adjust the impl block as described above.
-impl ReportCard {
+impl <T: Grade> ReportCard<T> {
     fn print(&self) -> String {
+        
         format!(
             "{} ({}) - achieved a grade of {}",
-            &self.student_name, &self.student_age, &self.grade,
+            &self.student_name, &self.student_age, &self.grade 
         )
     }
+    // fn printalpha(&self) -> String {
+    //     format!(
+    //         "{} ({}) - achieved a grade of {}, {}",
+    //         &self.student_name, &self.student_age, &self.alpha
+    //     ) 
+    // }
 }
 
 fn main() {
@@ -52,7 +68,7 @@ mod tests {
     #[test]
     fn generate_alphabetic_report_card() {
         let report_card = ReportCard {
-            grade: "A+",
+            grade: "A+".to_string(),
             student_name: "Gary Plotter".to_string(),
             student_age: 11,
         };
